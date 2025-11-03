@@ -148,6 +148,7 @@ dbt run --full-refresh
 
 # 4️⃣ View Looker dashboard
 open https://lookerstudio.google.com/
+link: https://lookerstudio.google.com/reporting/65d8430b-ba60-4c65-b105-1660545ed945
 ```
 
 ---
