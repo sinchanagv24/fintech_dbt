@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: stg_credit_card_default
+    columns:
+      - name: user_id
+        tests: [not_null]
+      - name: limit_bal
+        tests: [not_null]

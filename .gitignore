@@ -1,0 +1,58 @@
+# ============================================
+# Python & dbt project .gitignore
+# ============================================
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.pyc
+
+# dbt build artifacts
+target/
+dbt_packages/
+logs/
+dbt_modules/
+manifest.json
+run_results.json
+graph_summary.json
+partial_parsing.msgpack
+
+# Compiled SQL and temporary files
+compiled/
+*.log
+*.tmp
+*.sqlite
+.DS_Store
+
+# Local system / IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Jupyter / notebooks (if any)
+.ipynb_checkpoints/
+
+# Data / cache files
+*.csv
+*.tsv
+*.parquet
+*.gz
+
+# Zip archives and exports
+*.zip
+
+# Google Cloud credentials (if used locally)
+*.json
+
+# Secrets / environment variables
+.env
+.env.*

@@ -1,0 +1,47 @@
+{{
+  config(
+    materialized='table',
+    pre_hook=[
+      "
+      CREATE OR REPLACE MODEL `{{ target.project }}.{{ target.schema }}.risk_high_risk_customers_arima_model`
+      OPTIONS(
+        MODEL_TYPE='ARIMA_PLUS',
+        time_series_timestamp_col='month',
+        time_series_data_col='high_risk_customers',
+        auto_arima=TRUE,
+        holiday_region='US'
+      ) AS
+      SELECT month, high_risk_customers
+      FROM `{{ target.project }}.{{ target.schema }}.risk__portfolio_trends`
+      ORDER BY month
+      "
+    ]
+  )
+}}
+
+WITH forecast AS (
+  SELECT
+    DATE_TRUNC(CAST(forecast_timestamp AS DATE), MONTH) AS month,
+    forecast_value                AS value,
+    prediction_interval_lower     AS lower,
+    prediction_interval_upper     AS upper,
+    'forecast'                    AS kind
+  FROM ML.FORECAST(
+    MODEL `{{ target.project }}.{{ target.schema }}.risk_high_risk_customers_arima_model`,
+    STRUCT(12 AS horizon, 0.90 AS confidence_level)
+  )
+),
+actuals AS (
+  SELECT
+    month,
+    CAST(high_risk_customers AS FLOAT64) AS value,   -- keep types consistent for UNION
+    CAST(NULL AS FLOAT64)                 AS lower,
+    CAST(NULL AS FLOAT64)                 AS upper,
+    'actual'                              AS kind
+  FROM `{{ target.project }}.{{ target.schema }}.risk__portfolio_trends`
+)
+
+SELECT * FROM actuals
+UNION ALL
+SELECT * FROM forecast
+ORDER BY month, kind

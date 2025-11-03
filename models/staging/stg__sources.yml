@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: ml_datasets
+    database: bigquery-public-data
+    schema: ml_datasets
+    tables:
+      - name: credit_card_default
