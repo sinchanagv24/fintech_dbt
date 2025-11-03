@@ -1,0 +1,17 @@
+# Core dependencies
+dbt-bigquery==1.10.2
+google-cloud-bigquery==3.21.0
+pandas==2.2.2
+numpy==1.26.4
+
+# Visualization and dashboard tools
+matplotlib==3.9.2
+plotly==5.24.0
+
+# Optional utilities
+python-dotenv==1.0.1
+pyyaml==6.0.2
+
+# Development tools
+jupyter==1.1.0
+black==24.8.0
